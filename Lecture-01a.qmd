@@ -1,0 +1,181 @@
+---
+title: Welcome
+subtitle: ENVX2001 Applied Statistical Methods
+author: Dr. Januar Harianto 
+institute: The University of Sydney
+date: last-modified # today | last-modified
+date-format: "MMM YYYY" # see https://momentjs.com/docs/#/displaying/format/
+execute: 
+  eval: true
+  echo: true
+self-contained: false
+---
+
+# Acknowledgement to Country
+The University of Sydney is on Gadigal Country. We acknowledge their ongoing connection to and ownership of this land and pay our respects to past, present and emerging leaders.
+
+# About
+
+Staff | Structure | Attendance
+
+## Staff
+
+::: {layout-ncol=4 style="text-align:center;"}
+
+
+![Aaron Greenville](images/aaron.tiff){width=200}
+
+![Liana Pozza](images/liana.jpeg){width=206}
+
+![Januar Harianto](images/januar.jpeg){width=230}
+
+![Mathew Crowther](images/matcrowther.jpeg){width=205}
+:::
+
+
+### Demonstrators
+
+*Check Canvas*
+
+## Structure
+
+### Lectures
+
+**Tue 10 AM** -- [Chemistry Lecture Theatre 1][clt01]
+
+**Wed 11 AM** -- [Chemistry Lecture Theatre 3][clt03]
+
+
+
+### Tutorials
+
+**Self-guided** sessions (1 hour), to be completed before the week's lab.
+
+### Labs
+
+All labs are held in the **South Eveleigh Precinct** (more on this later):
+
+- Thursday 9 am – 12 pm
+- Friday 10 am – 1 pm, 2 pm – 5 pm
+
+## Attendance
+
+Attendance is **mandatory** for labs and we hope to see you in person for Lectures!
+
+
+# South Eveleigh Precinct
+Used to be known as the **Australian Techonlogy Park** (ATP). *Still is, but it used to, too.*
+
+## Biomedical Building
+![](images/biomedical.jpg)
+
+Credit: Michael Wheatland
+
+
+## Directions
+
+:::: {.columns}
+
+::: {.column width=50%}
+### Walking
+
+<iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d3311.892510223299!2d151.19220377714373!3d-33.89242207028511!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x6b12b1d46683b08b%3A0x16d4584b9e392df3!2sCarslaw%20Building%2C%20University%20of%20Sydney%2C%20Camperdown%20NSW%2C%20Australia!3m2!1d-33.8885751!2d151.1903621!4m5!1s0x6b12b1ce3cfcd14d%3A0xe363fbe9239512d6!2s1%20Central%20Avenue%2C%20Eveleigh%20NSW%2C%20Australia!3m2!1d-33.896277999999995!2d151.19577999999998!5e0!3m2!1sen!2smy!4v1702530988987!5m2!1sen!2smy" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+:::
+
+::: {.column width=50%}
+::: {.fragment}
+### Buses
+[Courtesy buses][buses] are available:
+
+- Best option is to take the bus from **Fisher Library** to **Redfern Station**, then walk to the precinct (through the new station platform as “local traffic”).
+- Alternatively, direct buses are available -- but less frequent.
+
+### Driving
+Free parking is available around Henderson Road, but it is extremely crowded. We do *not* recommend driving to the precinct.
+:::
+:::
+::::
+
+
+# Why study statistics?
+
+> Doesn't seem relevant to my degree...
+
+## Learn, so you can...
+
+::: {.incremental}
+- Conduct effective **research**; *but if you are not a researcher*, you can still…
+- Critically **evaluate** research findings; *but if you don’t plan to read scientific literature*, you can still…
+- Make informed **decisions** based on evidence and know the signs when someone is trying to mislead you.
+:::
+
+::: {.fragment}
+
+
+
+![Source: *Anchorman* (2004)](images/anchorman.gif){fig-align="left" height=350}
+:::
+
+## But, why R?
+
+:::{.fragment}
+:::: {.columns}
+::: {.column width=50%}
+#### Mechanical stress on plant tissue
+![](images/raster.gif)
+
+[Source](https://doi.org/10.1111/tpj.13290)
+:::
+
+::: {.column width=50%}
+#### Climate stripes 
+\
+\
+\
+\
+\
+![](images/au-climate-2023.png)
+
+[Source](https://dominicroye.github.io/en/2018/how-to-create-warming-stripes-in-r/)
+:::
+::::
+:::
+
+
+# Doing well {{< fa trophy >}}
+
+Attend all lectures | Put in the hours | Ask questions
+
+## {{< fa trophy >}} Attend ALL lectures 
+### Attending a lecture is *not* the same as watching a recording...
+- You can **ask questions** and *interact* with your peers.
+- Your **lecturer** actively adjusts the pace/conten based on your *informal* feedback (e.g. confused looks, Google polls).
+- If you don't *understand* something, there is a *good* chance that you can address it *before* the next lecture or lab.
+
+## {{< fa trophy >}} Put in the hours 
+- This is a **6 credit point** unit, which means that you are expected to spend **130 -- 150 hours** in total, including exam prep time (~10 h per week)!
+- **Practice makes perfect**. Tutorials and Labs help you apply the concepts you learn in lectures -- complete all the exercises, and practice with the bonus questions provided.
+
+![](images/adventuretime.gif){fig-align="center" height=350}
+
+## {{< fa person-circle-question >}} Ask questions
+
+- [**Ed**][edsite] is the *best* place to ask questions. We are way more responsive on **Ed** than on email.
+- You *may* ask **ChatGPT** if you are stuck, or need help to understand something more general.
+- We have drop-in sessions, where you can jump in and have a chat on Zoom. We will announce the schedule on **Ed**.
+
+
+## Let's get started!
+
+### Questions?
+
+This presentation is based on the [SOLES Quarto reveal.js template](https://github.com/usyd-soles-edu/soles-revealjs) and is licensed under a [Creative Commons Attribution 4.0 International License][cc-by] 
+
+
+<!-- Links -->
+[clt01]: https://venueweb.sydney.edu.au/F11.01.145
+[clt03]: https://venueweb.sydney.edu.au/F11.02.238
+[cc-by]: http://creativecommons.org/licenses/by/4.0/
+[buses]: https://www.sydney.edu.au/about-us/campuses/getting-to-campus/campus-bus-timetables.html
+[edsite]:https://edstem.org/au/dashboard

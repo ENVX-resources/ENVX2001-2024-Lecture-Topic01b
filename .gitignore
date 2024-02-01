@@ -1,0 +1,11 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+.trunk/
+*_files/
+/.quarto/
+/.luarc.json
+
+*.html
