@@ -1,5 +1,6 @@
 project:
   title: SOLES Quarto presentation
+  # post-render: _postrender.R
 standalone: true
 slide-level: 2
 highlight-style: github
@@ -26,3 +27,5 @@ format:
   #   # cosmiclatte: false # set true to turn on an off-white page background colour
   # pptx:
   #   reference-doc: _resources/templates/pptx/cosmic-latte.pptx
+execute:
+  freeze: auto
