@@ -1,0 +1,66 @@
+---
+title: Introduction
+subtitle: ENVX2001 Applied Statistical Methods
+author: Dr. Januar Harianto 
+institute: The University of Sydney
+date: last-modified # today | last-modified
+date-format: "MMM YYYY" # see https://momentjs.com/docs/#/displaying/format/
+execute: 
+  eval: true
+  echo: true
+self-contained: false
+editor-options:
+  canonical: true
+---
+
+# [Download PDF](`r pdf_file`)
+Click above to access a .pdf version of this presentation.
+
+*Otherwise, continue navigating through the slides.*
+
+# Samples, populations and study design
+
+> "To call in a statistician after the experiment has been done may be no more than asking him to perform a post-mortem examination: he may be able to say what the experiment died of." 
+
+-- Sir Ronald Fisher
+
+## Revision
+
+- **Population**: the entire group of individuals or instances about whom we want to draw conclusions.
+- **Sample**: a *subset* of the population.
+
+::: {.fragment .incremental}
+### Parameter
+- A numerical **measure** that describes an aspect of a population.
+- *Not known* (unless we sample the entire population), therefore we **estimate** them using a **sample statistic**.
+- **What information does the *sample statistic* give about the *population parameter*, and how reliable is that information?**
+:::
+
+::: {.fragment .incremental}
+### Uncertainty
+
+- Populations are inherently variable - **random variation**.
+- Repeated samples from the same population will give different sample statistics - **sampling variation**.
+- **We want to be able to quantify this uncertainty in our estimates.**
+:::
+
+## Confused?
+
+Visit the [ENVX Resources](https://github.com/ENVX-resources) organisation on GitHub.
+
+- [Probability distributions](https://github.com/ENVX-resources/ENVX1002-2024-Lecture-Topic03) (ENVX1002)
+- [Sampling distributions](https://github.com/ENVX-resources/ENVX1002-2024-Lecture-Topic04) (ENVX1002)
+
+
+# Taking samples
+
+## Thanks
+
+### Questions?
+
+This presentation is based on the [SOLES Quarto reveal.js template][soles-revealjs] and is licensed under a [Creative Commons Attribution 4.0 International License][cc-by] 
+
+
+<!-- Links -->
+[soles-revealjs]: https://github.com/usyd-soles-edu/soles-revealjs
+[cc-by]: http://creativecommons.org/licenses/by/4.0/
