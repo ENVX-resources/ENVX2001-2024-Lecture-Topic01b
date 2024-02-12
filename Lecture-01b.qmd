@@ -1,17 +1,26 @@
 ---
-title: Introduction
+title: Lecture 01b - Introduction
 subtitle: ENVX2001 Applied Statistical Methods
 author: Dr. Januar Harianto 
 institute: The University of Sydney
 date: last-modified # today | last-modified
 date-format: "MMM YYYY" # see https://momentjs.com/docs/#/displaying/format/
-execute: 
-  eval: true
+execute:
+  cache: false
   echo: true
-self-contained: false
 editor-options:
   canonical: true
+toc: true
+toc-depth: 1
+toc-title: Outline
 ---
+
+```{r}
+#| include: false
+# find pdf file
+pdf_file <- list.files(pattern = ".pdf")
+```
+
 
 # [Download PDF](`r pdf_file`)
 Click above to access a .pdf version of this presentation.
@@ -36,23 +45,570 @@ Click above to access a .pdf version of this presentation.
 - **What information does the *sample statistic* give about the *population parameter*, and how reliable is that information?**
 :::
 
-::: {.fragment .incremental}
-### Uncertainty
+<!-- ::: {.fragment .incremental} -->
+<!-- ### Uncertainty -->
 
-- Populations are inherently variable - **random variation**.
-- Repeated samples from the same population will give different sample statistics - **sampling variation**.
-- **We want to be able to quantify this uncertainty in our estimates.**
-:::
+<!-- - Populations are inherently variable - **random variation**. -->
+<!-- - Repeated samples from the same population will give different sample statistics - **sampling variation**. -->
+<!-- - **We want to be able to quantify this uncertainty in our estimates.** -->
+<!-- ::: -->
+
 
 ## Confused?
 
 Visit the [ENVX Resources](https://github.com/ENVX-resources) organisation on GitHub.
 
-- [Probability distributions](https://github.com/ENVX-resources/ENVX1002-2024-Lecture-Topic03) (ENVX1002)
-- [Sampling distributions](https://github.com/ENVX-resources/ENVX1002-2024-Lecture-Topic04) (ENVX1002)
+- [Probability distributions](https://github.com/ENVX-resources/ENVX1002-2024-Lecture-Topic03) (ENVX1002) - 2024 version
+- [Sampling distributions](https://github.com/ENVX-resources/ENVX1002-2024-Lecture-Topic04) (ENVX1002) - 2024 version
 
 
-# Taking samples
+::: {.fragment .callout-tip}
+You will explore more experimental design principles next week, and in **Module 2**.
+:::
+
+# Designs: why do we care?
+
+> (On a failed experiment)
+>
+> *That is not an experiment you have there, that is an experience*.
+
+-- Sir Ronald Fisher
+
+## Measure everything?
+
+Why not measure every individual in a population, instead of designing a sampling strategy?
+
+::: {.fragment}
+- **Impractical** to measure every individual in a population, and some populations are *infinite* -- practically impossible to measure all.
+- **Costly** to measure every individual in a population -- time, money, resources.
+- **Destructive** in many biological cases e.g. to measure the age of a plant, you may have to cut it down, so you want to respect the loss of life.
+:::
+
+::: {.fragment}
+::: {.callout-important}
+Importantly, sampling from a population -- when done correctly -- can give a **good estimate of the population parameter**, give or take some *uncertainty*. Apart from a census study, there should be no reason to measure every individual in a population.
+:::
+:::
+
+## Sampling designs
+
+Can be done in two general ways:
+
+1. **Observational study**
+2. **Controlled experiment**
+
+When designed correctly, both can give us a good estimate of the population parameter while saving time and resources.
+
+::: {.fragment}
+### Considerations
+
+- Samples should be **representative** of the population and **randomly** selected.
+- **Bias** can be introduced if the sampling design is not carefully considered.
+- **Confounding** variables can also affect the results.
+
+We will explore these concepts in more detail over the next few weeks.
+:::
+
+## Observational study vs. controlled experiment
+
+| Aspect | Observational study | Controlled experiment |
+|--------|---------------------|-----------------------|
+| **Control** | No control over the variables of interest - **Mensurative** and **Absolute** | Control over the variables of interest - **Comparative** and **Manipulative** |
+| **Causation** | Cannot establish causation, but perhaps **association** | Can establish **causation** |
+| **Feasibility** | Can be done in many cases | May be destructive and cannot always be done |
+
+
+## Other designs exist
+
+- **Theoretical models** (e.g. mathematical models): useful for understanding the system, often used in ecology and epidemiology. No data collection.
+- **Simulation studies**: useful for figuring out experimental design and understanding the system. Some data collection may be involved to inform the model.
+- **Case studies**: Similar to observational studies, but often with a single case! Useful for understanding a unique situation, often used in medicine and psychology. No control over the variables of interest and sometimes no statistical inference is made.
+
+## Soil carbon {auto-animate=true}
+
+![](images/soilmap.png)
+
+
+## Soil carbon {auto-animate=true}
+
+:::: {.columns}
+::: {.column width="50%"}
+![](images/soilmap.png)
+:::
+
+::: {.column width="50%"}
+
+### What is the best way to sample?
+
+- Sequestering carbon in soil is a potential way to mitigate climate change, and provides nutrients and resilience to crops. Worth $50/tonne if measured.
+- Collecting soil samples is costly and time-consuming, about $100/sample.
+- We want a way to estimate the soil carbon content in a large area - some kind of **summary statistic**.
+
+:::
+::::
+
+
+## Summary statistics
+
+::: {.fragment}
+### Central tendency
+
+- **Mean**: the average of the data.
+- **Median**: the middle value of the data.
+- **Mode**: the most frequent value in the data.
+
+:::
+
+::: {.fragment}
+### Variability
+
+- **Range**: the difference between the largest and smallest value.
+- **Interquartile range**: the difference between the 75th and 25th percentile.
+- **Variance**: the average of the squared differences from the mean.
+- **Standard deviation**: the square root of the variance.
+
+:::
+
+# Mean and standard deviation
+
+> Statistics always remind me of the fellow who drowned in a river whose average depth was only three feet (\~0.9 m).
+
+-- *Woody Hayes, American football coach*
+
+## Mean and standard deviation
+
+- The most *common* measures of central tendency and variability.
+- Works well for **symmetric** and **unimodal** distributions, therefore the assumption is that the data is normally distributed.
+
+::: {.fragment}
+
+```{r}
+#| code-fold: true
+
+library(tidyverse)
+
+ggplot(
+    data = tibble(x = seq(0, 20, 0.01)),
+    aes(x = x)
+) +
+    stat_function(
+        fun = dchisq,
+        args = list(df = 5),
+        color = "purple", size = 1
+    ) +
+    # add vertical lines for mean, median and mode
+    geom_vline(xintercept = 5, color = "red", linetype = "dashed") +
+    geom_vline(xintercept = 4.35, color = "blue", linetype = "dashed") +
+    geom_vline(xintercept = 3, color = "seagreen", linetype = "dashed") +
+    # label the lines
+    annotate("text", x = 3.6, y = 0.06, label = "Mode", color = "seagreen") +
+    annotate("text", x = 5.6, y = 0.09, label = "Mean", color = "red") +
+    annotate("text", x = 5.1, y = 0.03, label = "Median", color = "blue") +
+    labs(
+        x = "x",
+        y = "Density"
+    ) +
+    theme_bw()
+```
+
+- Not quite useful for **skewed** or **multimodal** distributions.
+
+:::
+
+
+## Arithmetric mean
+
+> Sum of all the values, divided by the number of values.
+
+::: {.fragment}
+### Population mean
+If we measure the entire population, the population mean $\mu$ is:
+
+$$ \mu = \frac{\sum_{i=1}^{N} y_i}{N} $$
+
+where $y_i$ is the $i$th observation and $N$ is the number of individuals in the population.
+:::
+::: {.fragment}
+### Sample mean
+Sample mean is based on the same principle, but we use $n$ instead of $N$ and $\bar{y}$ instead of $\mu$.
+
+$$ \bar{y} = \frac{\sum_{i=1}^{n} y_i}{n} $$
+
+where $y_i$ is the $i$th observation and $n$ is the number of sample observations.
+:::
+
+## Variance
+
+::: {.fragment}
+
+> The average of the squared differences from the mean.
+
+:::
+
+::: {.fragment}
+#### Population variance:
+$$\sigma^2 = \frac{\sum_{i=1}^{N} (y_i - \mu)^2}{N}$$
+
+#### Sample variance
+$$s^2 = \frac{\sum_{i=1}^{n} (y_i - \bar{y})^2}{n-1}$$
+
+:::
+
+## Standard deviation
+
+::: {.fragment}
+> The square root of the variance.
+
+:::
+
+::: {.fragment}
+#### Population standard deviation
+
+$$\sigma = \sqrt{\sigma^2} = \sqrt{\frac{\sum_{i=1}^{N} (y_i - \mu)^2}{N}}$$
+
+#### Sample standard deviation
+
+$$s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n} (y_i - \bar{y})^2}{n-1}}$$
+
+:::
+
+
+## Why $n-1$?
+
+- The sample variance and standard deviation calculations use $n-1$ in the denominator, not $n$.
+- This is called [**Bessel's correction**](https://en.wikipedia.org/wiki/Bessel%27s_correction).
+- It is used to correct the bias in the estimation of the population variance from a sample, **as $n$ number of observations have $n-1$ independent residuals**.
+  - *You will learn more about this -- and degrees of freedom -- in the next module*.
+
+
+## Soil carbon
+
+**Sampling design**: Soil carbon content was measured at 7 locations across the area. The amount at each location was 48, 56, 90, 78, 86, 71, 42 tonnes per hectare (t/ha).
+
+::: {.fragment}
+```{r}
+soil <- c(48, 56, 90, 78, 86, 71, 42)
+soil
+```
+
+:::
+
+::: {.fragment}
+### Calculating mean and standard deviation
+
+```{r}
+mean(soil)
+sd(soil)
+```
+
+:::
+
+::: {.fragment .callout-tip}
+## What do these numbers tell us? How confident are we that they represent the entire area?
+
+:::
+
+# The sampling distribution
+
+## Distributions
+
+- The **population distribution** is the distribution of all the individuals in the population.
+- From the population distribution, we can sample it to get a **sample distribution**.
+- If we summarise the sample distribution, we get a single value - the **sample statistic**.
+- The sample statistic is part of a **sampling distribution**, based on the idea that given unlimited resources, we could sample the population many times and calculate the sample statistic each time.
+
+::: {.fragment}
+
+### Example
+
+::: {.incremental}
+- We want to measure the mean height of trees in a forest, which contains 1000 trees. **1000 possible height values make up the population distribution**.
+- We can't measure all the trees, so we take a sample of 100 trees and calculate the average height.**100 height values make up the sample distribution**.
+- The mean height of the 100 trees is calculated. This is the **sample statistic** - a single value for the sample.
+- To make up the **sampling distribution**, we could repeat the process of taking a sample of 100 trees and calculating the mean height many times...
+:::
+:::
+
+
+## Distributions - visualised
+
+![Population, sample and sampling distributions. [Source](https://www.researchgate.net/figure/Population-Sample-and-Sampling-Distributions_fig2_267837095).](images/distributions.png){#fig-distributions fig-align="center"}
+
+
+## How can distributions help us answer the question?
+
+> What information does the *sample statistic* give about the *population parameter*, and how reliable is that information?
+
+::: {.fragment}
+We need to standardise the sample statistic to the *number of observations* in the sample.
+:::
+
+::: {.fragment}
+### Standard error
+
+$$SE = \frac{s}{\sqrt{n}}$$
+
+where $s$ is the sample standard deviation and $n$ is the number of observations in the sample.
+
+:::
+
+::: {.incremental}
+- The standard deviation value is *standardised* to the number of observations in the sample.
+- Tells us how much the sample statistic varies from sample to sample, i.e. **how well we know the mean**.
+- If standard error is "small", we are more confident in the sample statistic -- **more on this next week**.
+:::
+
+## Effect of sample size
+
+```{r}
+#| code-fold: true
+
+library(tidymodels)
+library(patchwork)
+set.seed(642)
+
+heights <- tibble(heights = rnorm(1000, 1.99, 1))
+popmean <- mean(heights$heights)
+sample_sizes <- c(2, 5, 25, 100)
+n <- length(sample_sizes)
+
+heights <- tibble(heights = rgamma(1000, shape = 2, scale = 1))
+sample_sizes <- c(2, 5, 25, 100)
+n <- length(sample_sizes)
+
+plots <- lapply(sample_sizes, function(size) {
+    df <- heights |>
+        rep_sample_n(size = size, reps = 2000) |>
+        group_by(replicate) |>
+        summarise(xbar = mean(heights))
+
+    mean_xbar <- mean(df$xbar)
+
+    ggplot(df, aes(x = xbar)) +
+        geom_histogram(fill = "orangered", alpha = 0.5, bins = 50) +
+        geom_vline(aes(xintercept = mean_xbar), color = "blue", linetype = "dashed") +
+        geom_text(aes(x = mean_xbar, label = sprintf("%.2f", mean_xbar), y = Inf), hjust = -0.1, vjust = 2, color = "blue") +
+        ggtitle(paste0("Sample Size: ", size)) +
+        xlab("Mean height (m)") +
+        xlim(-3, 8) +
+        theme_bw()
+})
+wrap_plots(plots)
+```
+
+
+- Increased sample size leads to a more accurate estimate of the population mean, reflected by the **narrower distribution** of the sample mean, which is captured by the **standard error**.
+
+## Effect of variability
+
+```{r}
+#| code-fold: true
+
+set.seed(1221)
+
+# Define a function to generate ggplot objects
+generate_plot <- function(sd) {
+    data <- rnorm(500, 1.99, sd)
+    p <- ggplot(data = tibble(x = data), aes(x = x)) +
+        geom_histogram(fill = "orangered", alpha = 0.5, bins = 50) +
+        ggtitle(paste("SD =", sd)) +
+        xlim(-100, 100) +
+        theme_bw()
+    return(p)
+}
+
+# Apply the function to a list of standard deviations
+sds <- c(3, 6, 15, 25)
+plots <- lapply(sds, generate_plot)
+
+# Wrap the plots
+wrap_plots(plots)
+```
+
+- Increased variability leads to a wider distribution of the sample mean (i.e. less precision), which is *also* reflected by the **standard error**.
+
+# Central limit theorem
+
+> I know of scarcely anything so apt to impress the imagination as the **wonderful form of cosmic order** expressed by the Central Limit Theorem. The law would have been personified by the Greeks and deified, if they had known of it.”
+
+-- Sir Francis Galton, 1889, Natural Inheritance* (emphasis added)
+
+
+## CLT
+
+- A fundamental theorem in statistics.
+- Regardless of the shape of the population distribution, the sampling distribution of the **sample mean** will be approximately normally distributed **if the sample size is large enough**.
+- Because of this, we can make predictions about the population by assuming that the sampling distribution is normally distributed -- **a core assumption in many statistical tests**.
+
+## Example
+
+
+```{r}
+#| classes: custom4060
+#| output-location: column
+
+set.seed(239)
+library(ggplot2)
+library(dplyr)
+# Generate a skewed distribution
+skewed <- tibble(
+    x = rgamma(1000, shape = 2, scale = 1)
+)
+
+# plot in ggplot2
+ggplot(data = skewed, aes(x = x)) +
+    geom_histogram(
+        fill = "orangered",
+        alpha = 0.5, bins = 50
+    ) +
+    xlab("Height (m)") +
+    theme_bw()
+```
+
+- Skewed population distribution for tree heights.
+- We want to estimate the mean height of the trees in the forest.
+
+## 1 sample (no summary statistic)
+
+
+```{r}
+#| classes: custom4060
+#| output-location: column
+
+skewed |>
+    infer::rep_sample_n(
+        size = 1,
+        reps = 1000
+    ) |>
+    group_by(replicate) |>
+    summarise(xbar = mean(x)) |>
+    ggplot(aes(x = xbar)) +
+    geom_density(
+        fill = "orangered",
+        alpha = 0.5, bins = 50
+    ) +
+    xlim(0, 10) +
+    xlab("Mean height (m)") +
+    theme_bw()
+```
+
+- A single random sample per calculated mean, repeated 1000 times, gives us a distribution of sample means that will likely mirrors the population distribution.
+
+## 2 samples
+
+
+```{r}
+#| classes: custom4060
+#| output-location: column
+
+skewed |>
+    infer::rep_sample_n(
+        size = 2,
+        reps = 1000
+    ) |>
+    group_by(replicate) |>
+    summarise(xbar = mean(x)) |>
+    ggplot(aes(x = xbar)) +
+    geom_density(
+        fill = "orangered",
+        alpha = 0.5, bins = 50
+    ) +
+    xlim(0, 10) +
+    xlab("Mean height (m)") +
+    theme_bw()
+```
+
+- Two random samples per calculated mean, repeated 1000 times.
+- The distribution of sample means is starting to look more like a normal distribution.
+
+
+## 5 samples
+
+```{r}
+#| classes: custom4060
+#| output-location: column
+
+skewed |>
+    infer::rep_sample_n(
+        size = 5,
+        reps = 1000
+    ) |>
+    group_by(replicate) |>
+    summarise(xbar = mean(x)) |>
+    ggplot(aes(x = xbar)) +
+    geom_density(
+        fill = "orangered",
+        alpha = 0.5, bins = 50
+    ) +
+    xlim(0, 10) +
+    xlab("Mean height (m)") +
+    theme_bw()
+```
+
+- Five random samples per calculated mean, repeated 1000 times.
+- Not only is the distribution of sample means starting to look more like a normal distribution, but the standard error is also getting smaller.
+
+## 30 samples
+
+```{r}
+#| classes: custom4060
+#| output-location: column
+
+skewed |>
+    infer::rep_sample_n(
+        size = 30,
+        reps = 1000
+    ) |>
+    group_by(replicate) |>
+    summarise(xbar = mean(x)) |>
+    ggplot(aes(x = xbar)) +
+    geom_density(
+        fill = "orangered",
+        alpha = 0.5, bins = 50
+    ) +
+    xlim(0, 10) +
+    xlab("Mean height (m)") +
+    theme_bw()
+```
+
+- Thirty random samples per calculated mean, repeated 1000 times.
+- The distribution of sample means is very close to a normal distribution.
+
+## 50 samples
+
+```{r}
+#| classes: custom4060
+#| output-location: column
+
+skewed |>
+    infer::rep_sample_n(
+        size = 50,
+        reps = 1000
+    ) |>
+    group_by(replicate) |>
+    summarise(xbar = mean(x)) |>
+    ggplot(aes(x = xbar)) +
+    geom_density(
+        fill = "orangered",
+        alpha = 0.5, bins = 50
+    ) +
+    xlim(0, 10) +
+    xlab("Mean height (m)") +
+    theme_bw()
+```
+
+- Fifty random samples per calculated mean, repeated 1000 times.
+- **How many samples is enough?**
+
+## How many samples is enough?
+
+::: {.incremental}
+- If $n$ is large enough, the sampling distribution of the sample mean will be approximately normally distributed - **allowing us to use the normal distribution to make inferences about the population!**
+- **How large is large enough?**
+  - **Rule of thumb**: $n \geq 30$ is often used, but this is not a hard and fast rule.
+  - **Depends on the population distribution**: if the population distribution is normal, the sampling distribution will be normal for any $n$.
+  - **Depends on the variability**: if the population distribution is highly variable, a larger $n$ is needed to get a normal sampling distribution.
+:::
 
 ## Thanks
 
