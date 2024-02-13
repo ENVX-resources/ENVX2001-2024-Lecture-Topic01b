@@ -1,6 +1,6 @@
 project:
   title: SOLES Quarto presentation
-  # post-render: _postrender.R # Script to generate PDF at every render (slow).
+  post-render: _postrender.R # Script to generate PDF at every render (slow).
 standalone: true
 slide-level: 2
 highlight-style: github
@@ -19,6 +19,6 @@ format:
     logo: images/usyd_horizontal.svg
     transition: none # none | fade | slide | convex | concave | zoom
     background-transition: none
-    embed-resources: true
+    embed-resources: false
 execute:
   freeze: auto
