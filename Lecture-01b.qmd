@@ -15,18 +15,6 @@ toc-depth: 1
 toc-title: Outline
 ---
 
-```{r}
-#| include: false
-# find pdf file
-pdf_file <- list.files(pattern = ".pdf")
-```
-
-
-# [Download PDF](`r pdf_file`)
-Click above to access a .pdf version of this presentation.
-
-*Otherwise, continue navigating through the slides.*
-
 # Samples, populations and study design
 
 > "To call in a statistician after the experiment has been done may be no more than asking him to perform a post-mortem examination: he may be able to say what the experiment died of." 
